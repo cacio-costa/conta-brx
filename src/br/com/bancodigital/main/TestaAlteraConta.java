@@ -2,27 +2,26 @@ package br.com.bancodigital.main;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import br.com.bancodigital.dao.ContaDao;
 import br.com.bancodigital.jdbc.ConnectionFactory;
+import br.com.bancodigital.modelo.Conta;
 
 public class TestaAlteraConta {
 
 	public static void main(String[] args) throws SQLException {
 		Connection connection = new ConnectionFactory().getConnection();
 		
-		String sql = "update banco.conta "
-				   + "   set saldo = ? "
-				   + " where id = ? ";
+		ContaDao contaDao = new ContaDao(connection);
+		Conta conta = contaDao.buscaPorId(1L);
+		conta.setCliente("Ana Solteira");
+		conta.saca(new BigDecimal("500"));
 		
-		PreparedStatement ps = connection.prepareStatement(sql);
-		ps.setBigDecimal(1, new BigDecimal("2000"));
-		ps.setLong(2, 2);
-		ps.execute();
+		contaDao.altera(conta);
 		
-		ps.close();
 		connection.close();
+		System.out.println("Conta alterada.");
 	}
 	
 }

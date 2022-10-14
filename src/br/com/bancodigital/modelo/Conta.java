@@ -11,7 +11,7 @@ public class Conta {
 	private String cliente;
 	
 	private BigDecimal saldo;
-
+	
 	public Conta(Long agencia, String numero, String cliente, BigDecimal saldo) {
 		this.agencia = agencia;
 		this.numero = numero;
@@ -55,14 +55,18 @@ public class Conta {
 		return saldo;
 	}
 
-	public void setSaldo(BigDecimal saldo) {
-		this.saldo = saldo;
-	}
-
 	@Override
 	public String toString() {
 		return "Conta [id=" + id + ", agencia=" + agencia + ", numero=" + numero + ", cliente=" + cliente + ", saldo="
 				+ saldo + "]";
+	}
+
+	public void deposita(BigDecimal valor) {
+		this.saldo = this.saldo.add(valor);
+	}
+	
+	public void saca(BigDecimal valor) {
+		this.saldo = this.saldo.subtract(valor);
 	}
 	
 }
